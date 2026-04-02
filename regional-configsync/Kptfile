@@ -21,3 +21,9 @@ upstreamLock:
 info:
   site: https://nephio.org
   description: Package for configSync.
+pipeline:
+  mutators:
+  - name: PackageVariant.regional-configsync..0
+    image: ghcr.io/kptdev/krm-functions-catalog/set-annotations:v0.1.4
+    configMap:
+      nephio.org/cluster-name: regional
