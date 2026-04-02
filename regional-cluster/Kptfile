@@ -19,8 +19,20 @@ upstreamLock:
     ref: main
     commit: 5e1a968e8cbd09a6b930405e38ee6a2ef066c8eb
 info:
+  readinessGates:
+  - conditionType: config.injection.WorkloadCluster.workload-cluster
   description: This package provides a blueprint for deploying a capi cluster using the capi kind docker templates
 pipeline:
   mutators:
+  - name: PackageVariant.regional-cluster..0
+    image: ghcr.io/kptdev/krm-functions-catalog/set-annotations:v0.1.4
+    configMap:
+      nephio.org/cluster-name: regional
   - image: ghcr.io/kptdev/krm-functions-catalog/apply-replacements:v0.1.1
     configPath: apply-replacements.yaml
+status:
+  conditions:
+  - type: config.injection.WorkloadCluster.workload-cluster
+    status: "True"
+    message: injected resource "regional" from cluster
+    reason: ConfigInjected
